@@ -22,19 +22,25 @@ server.get('/projects', (req, res) => {
 
 // ALTERAR TITLE
 server.put('/projects/:id', (req, res) => {
+  const { id } = req.params;
+  const { title } = req.body;
+
+  const project = projects.find(p => p.id == id);
+
+  project.title = title;
+
+  return res.json(project);
+});
+
+// DELETAR UM PROJETO
+server.delete('/projects/:id', (req, res) => {
   const { id } = req.params
-  const { title } = req.body
 
   const project = projects.find(p => p.id == id)
 
-  project.title = title
-  
+  projects.splice(projects.indexOf(project.id), 1)
+
   return res.json(projects)
 })
-
-// DELETAR UM PROJETO
-server.delete('/projects/:id'), (req, res) => {
-  const { id } = req.params
-}
 
 server.listen(3030)
